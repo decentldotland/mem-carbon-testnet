@@ -40,18 +40,18 @@ const TESTNET_ENDPOINT = "https://endpoint.something/deploy";
 
 async function deploy() {
   try {
-    const sourceCode = readFileSync("./func.js", { encoding: "utf8" }); // the src code of the function/contract
-    const initState = readFileSync("./func.json", { encoding: "utf8" }); // the JSON initial function state
+    const sourceCode = readFileSync("./func.js", { encoding: "utf8" }); // the src code of the function
+    const initState = readFileSync("./state.json", { encoding: "utf8" }); // the JSON initial function state
     
     const body = {
       src: sourceCode,
       state: initState,
     };
     
-    const contract_id = (await axios.post(TESTNET_ENDPOINT, body))?.data
-      ?.contract_id;
-    console.log(contract_id);
-    return contract_id;
+    const function_id = (await axios.post(TESTNET_ENDPOINT, body))?.data
+      ?.function_id;
+    console.log(function_id);
+    return function_id;
   } catch (error) {
     console.log(error);
   }
@@ -67,11 +67,11 @@ const TESTNET_ENDPOINT = "https://endpoint.something/write";
 async function write() {
   try {
     const input = '{"function": "something"}'; // example: '{"function": "increment"}'
-    const contract_id = "your_contract_id"; // example: "ed0afed6-311f-be78-1063-8518bab3e29a"
+    const function_id = "your_function_id";
 
     const body = {
       input,
-      contract_id,
+      function_id,
     };
     const result = (await axios.post(TESTNET_ENDPOINT, body))?.data;
     console.log(result);
@@ -81,21 +81,17 @@ async function write() {
   }
 }
 ```
-### Get contract state
+### Get function state
 
-- `GET /state/:contract_id`
+- `GET /state/:function_id`
 
-### Get contract data (state, source code, and exmContext)
+### Get function data (state, source code, and exmContext)
 
-- `GET /data/contract/:contract_id`
+- `GET /data/function/:function_id`
 
-### Get all testnet contracts
+### Get all testnet deployed functions
 
-- `GET /contracts`
+- `GET /functions`
 
 ## License
 This repository is licensed under the [MIT License](./LICENSE)
-
-
-
-
