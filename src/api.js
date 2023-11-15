@@ -3,10 +3,10 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import {
-  saveContract,
-  writeContract,
-  getContract,
-  getAllContracts,
+  saveFunction,
+  writeFunction,
+  getFunction,
+  getAllFunctions,
 } from "./utils/cache.js";
 
 const app = express();
@@ -39,8 +39,8 @@ app.use((err, req, res, next) => {
 app.post("/deploy", async (req, res) => {
   try {
     const { src, state } = req.body;
-    const contract_id = await saveContract(src, state);
-    res.json(contract_id);
+    const function_id = await saveFunction(src, state);
+    res.json(function_id);
   } catch (error) {
     console.log(error);
   }
@@ -48,38 +48,38 @@ app.post("/deploy", async (req, res) => {
 
 app.post("/write", async (req, res) => {
   try {
-    const { contract_id, input } = req.body;
-    const tx = await writeContract(contract_id, input);
+    const { function_id, input } = req.body;
+    const tx = await writeFunction(function_id, input);
     res.json(tx);
   } catch (error) {
     console.log(error);
   }
 });
 
-app.get("/state/:contract_id", async (req, res) => {
+app.get("/state/:function_id", async (req, res) => {
   try {
-    const { contract_id } = req.params;
-    const contract = await getContract(contract_id);
-    res.json(JSON.parse(contract.state));
+    const { function_id } = req.params;
+    const func = await getFunction(function_id);
+    res.json(JSON.parse(func.state));
   } catch (error) {
     console.log(error);
   }
 });
 
-app.get("/data/contract/:contract_id", async (req, res) => {
+app.get("/data/function/:function_id", async (req, res) => {
   try {
-    const { contract_id } = req.params;
-    const contract = await getContract(contract_id);
-    res.json(contract);
+    const { function_id } = req.params;
+    const func = await getFunction(function_id);
+    res.json(func);
   } catch (error) {
     console.log(error);
   }
 });
 
-app.get("/contracts", async (req, res) => {
+app.get("/functions", async (req, res) => {
   try {
-    const contracts = await getAllContracts();
-    res.json(contracts);
+    const functions = await getAllFunctions();
+    res.json(functions);
   } catch (error) {
     console.log(error);
   }
