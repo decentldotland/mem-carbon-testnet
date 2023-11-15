@@ -1,6 +1,6 @@
 {
   "name": "mem-carbon-testnet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MEM Carbon is a testnet network with a temporal states storage",
   "type": "module",
   "main": "./src/api.js",

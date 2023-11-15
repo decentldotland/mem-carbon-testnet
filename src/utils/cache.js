@@ -5,27 +5,27 @@ import axios from "axios";
 
 const cache = new NodeCache();
 
-export async function saveContract(src, state) {
+export async function saveFunction(src, state) {
   try {
-    const contract_id = await guidGenerator();
-    const contract = { src, state };
+    const function_id = await guidGenerator();
+    const func = { src, state };
 
-    cache.set(contract_id, contract);
+    cache.set(function_id, func);
 
-    return { contract_id };
+    return { function_id };
   } catch (error) {
     console.log(error);
-    return { contract_id: undefined };
+    return { function_id: undefined };
   }
 }
 
-export async function writeContract(contract_id, input) {
+export async function writeFunction(function_id, input) {
   try {
-    if (!cache.has(contract_id)) {
-      return { error: `${contract_id} not deployed on testnet` };
+    if (!cache.has(function_id)) {
+      return { error: `${function_id} not deployed on testnet` };
     }
 
-    const { src, state, exmContext } = cache.get(contract_id);
+    const { src, state, exmContext } = cache.get(function_id);
 
     const body = {
       contractType: 0,
@@ -36,9 +36,9 @@ export async function writeContract(contract_id, input) {
     };
 
     const tx = await axios.post(MEM_TESTNET_URL, body);
-    const newCntx = await updateExmCntx(contract_id, tx.data.exmContext);
+    const newCntx = await updateExmCntx(function_id, tx.data.exmContext);
 
-    cache.set(contract_id, {
+    cache.set(function_id, {
       src: src,
       state: JSON.stringify(tx.data.state),
       exmContext: newCntx,
@@ -50,9 +50,9 @@ export async function writeContract(contract_id, input) {
   }
 }
 
-async function updateExmCntx(contract_id, newCntx) {
+async function updateExmCntx(function_id, newCntx) {
   try {
-    const oldCntx = JSON.parse(cache.get(contract_id)?.exmContext);
+    const oldCntx = JSON.parse(cache.get(function_id)?.exmContext);
 
     for (const req in newCntx.requests) {
       oldCntx.requests[req] = newCntx.requests[req];
@@ -68,23 +68,23 @@ async function updateExmCntx(contract_id, newCntx) {
     return JSON.stringify(newCntx);
   }
 }
-export async function getContract(contract_id) {
+export async function getFunction(function_id) {
   try {
-    if (!cache.has(contract_id)) {
-      return { error: `${contract_id} not deployed on testnet` };
+    if (!cache.has(function_id)) {
+      return { error: `${function_id} not deployed on testnet` };
     }
 
-    const contract = cache.get(contract_id);
-    return contract;
+    const func = cache.get(function_id);
+    return func;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getAllContracts() {
+export async function getAllFunctions() {
   try {
-    const contracts = cache.keys();
-    return contracts;
+    const functions = cache.keys();
+    return functions;
   } catch (error) {
     return [];
   }
