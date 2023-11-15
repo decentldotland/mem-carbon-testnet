@@ -1,0 +1,1 @@
+export const MEM_TESTNET_URL = `https://mem-testnet-bfdc8ff3530f.herokuapp.com/`;
