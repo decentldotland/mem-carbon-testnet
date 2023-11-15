@@ -3,7 +3,7 @@
     <img src="https://mem-home.vercel.app/icons/mem/mem-logo-v2.svg" height="180">
   </a>
   <h3 align="center"><code>@decentldotland/mem-carbon-testnet</code></h3>
-  <p align="center">MEM Carbon is a testnet network with temporal states storage</p>
+  <p align="center">MEM Carbon is a testnet network with temporary state storage</p>
 </p>
 
 
@@ -20,7 +20,7 @@ npm install && npm run start
 
 ## Self Hosted Vs Served Endpoint
 
-To safeguard the confidentiality of your tests and environmental agreements, it's recommended to operate a local testnet instance. This not only enhances scalability and testing speed but also maintains privacy.
+To keep your application data private, it's recommended to operate a local testnet instance. This will also enhance scalability and testing speed.
 
 Nevertheless, the MEM team provides a publicly accessible endpoint. It's crucial to note that the testnet data is strictly temporary and is purged within a 1-2 day timeframe:
 
@@ -35,13 +35,15 @@ Nevertheless, the MEM team provides a publicly accessible endpoint. It's crucial
 
 
 ```js
+import * as fs from 'fs';
+import axios from 'axios';
 
-const TESTNET_ENDPOINT = "https://endpoint.something/deploy";
+const TESTNET_ENDPOINT = "https://mem-testnet.xyz/deploy";
 
 async function deploy() {
   try {
-    const sourceCode = readFileSync("./func.js", { encoding: "utf8" }); // the src code of the function
-    const initState = readFileSync("./state.json", { encoding: "utf8" }); // the JSON initial function state
+    const sourceCode = fs.readFileSync("./func.js", { encoding: "utf8" }); // the src code of the function
+    const initState = fs.readFileSync("./state.json", { encoding: "utf8" }); // the JSON initial function state
     
     const body = {
       src: sourceCode,
@@ -62,7 +64,9 @@ async function deploy() {
 - `POST /write`
 
 ```js
-const TESTNET_ENDPOINT = "https://endpoint.something/write";
+import axios from 'axios';
+
+const TESTNET_ENDPOINT = "https://mem-testnet.xyz/write";
 
 async function write() {
   try {
