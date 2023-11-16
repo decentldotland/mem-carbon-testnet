@@ -41,8 +41,11 @@ app.post("/deploy", async (req, res) => {
     const { src, state } = req.body;
     const function_id = await saveFunction(src, state);
     res.json(function_id);
+    return;
   } catch (error) {
     console.log(error);
+    res.json({function_id: "ERROR_DEPLOY_CARBON_FUNCTION"});
+    return;
   }
 });
 
@@ -51,8 +54,10 @@ app.post("/write", async (req, res) => {
     const { function_id, input } = req.body;
     const tx = await writeFunction(function_id, input);
     res.json(tx);
+    return;
   } catch (error) {
-    console.log(error);
+    res.json({error: "unable to write to function"});
+    return;
   }
 });
 
@@ -61,8 +66,10 @@ app.get("/state/:function_id", async (req, res) => {
     const { function_id } = req.params;
     const func = await getFunction(function_id);
     res.json(JSON.parse(func.state));
+    return;
   } catch (error) {
-    console.log(error);
+    res.json({});
+    return;
   }
 });
 
@@ -71,8 +78,10 @@ app.get("/data/function/:function_id", async (req, res) => {
     const { function_id } = req.params;
     const func = await getFunction(function_id);
     res.json(func);
+    return;
   } catch (error) {
-    console.log(error);
+    res.json({});
+    return;
   }
 });
 
@@ -80,8 +89,10 @@ app.get("/functions", async (req, res) => {
   try {
     const functions = await getAllFunctions();
     res.json(functions);
+    return;
   } catch (error) {
-    console.log(error);
+    res.json([]);
+    return;
   }
 });
 
