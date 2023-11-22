@@ -25,6 +25,7 @@ To keep your application data private, it's recommended to operate a local testn
 Nevertheless, the MEM team provides a publicly accessible endpoint. It's crucial to note that the testnet data is strictly temporary and is purged within a 1-2 day timeframe:
 
 - Base endpoint: https://mem-testnet.xyz
+- Akash hosted endpoint: http://ni8amicr1pfejdvrbav9r9grh8.ingress.d3akash.cloud/
 
 
 ## Testnet Methods
