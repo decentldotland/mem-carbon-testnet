@@ -98,5 +98,17 @@ async function write() {
 
 - `GET /functions`
 
+## Local Testing
+You can use existing testing code snippets from this repository as follow:
+
+```bash
+npm run test-deploy
+```
+Grab the new function id, update the `./tests/write.js` file constant value of `FUNCTION_ID`, then run the following command
+
+```bash
+npm run test-write
+```
+
 ## License
 This repository is licensed under the [MIT License](./LICENSE)
