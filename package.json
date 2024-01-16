@@ -5,13 +5,18 @@
   "type": "module",
   "main": "./src/api.js",
   "scripts": {
-    "start": "node ./src/api.js"
+    "start": "node ./src/api.js",
+    "test-deploy": "node ./tests/deploy.js",
+    "test-write": "node ./tests/write.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/decentldotland/mem-carbon-testnet.git"
   },
-  "keywords": ["MEM", "testnet"],
+  "keywords": [
+    "MEM",
+    "testnet"
+  ],
   "author": "charmful0x",
   "license": "MIT",
   "bugs": {
