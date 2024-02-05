@@ -41,7 +41,7 @@ export async function writeFunction(function_id, input) {
     cache.set(function_id, {
       src: src,
       state: JSON.stringify(tx.data.state),
-      exmContext: newCntx,
+      exmContext: JSON.stringify(tx.data.exmContext),
     });
     return tx.data;
   } catch (error) {
